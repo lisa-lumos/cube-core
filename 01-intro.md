@@ -17,7 +17,11 @@ Data model objects:
 
 Access control range from simple row-level access rules, to completely custom data models per tenants, backed by different data sources. 
 
+Caching. The semantic layer can serve as a buffer to the data sources, protecting the cloud data warehouse from unnecessary/redundant load. 
 
+Cube implements caching through the aggregate awareness framework called `pre-aggregations`. 
+
+Cube builds and refreshes pre-aggregations in the background, by running queries in the cloud data warehouse, and storing results in Cube Store, which is backed by distributed file storage, such as S3. Pre-aggregations can be refreshed on schedule. 
 
 
 
