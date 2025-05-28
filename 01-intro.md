@@ -23,19 +23,6 @@ Cube implements caching through the aggregate awareness framework called `pre-ag
 
 Cube builds and refreshes pre-aggregations in the background, by running queries in the cloud data warehouse, and storing results in Cube Store, which is backed by distributed file storage, such as S3. Pre-aggregations can be refreshed on schedule. 
 
+When you sent a query to Cube, it checks to see if an existing and fresh pre-aggregate is available for it. 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Cube exposes meta API for data model introspection. It enables other tools to inspect the data model definitions and take actions accordingly. 
