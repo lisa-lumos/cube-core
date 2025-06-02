@@ -49,7 +49,7 @@ cubes:
         format: percent
 ```
 
-
+Usually, cubes tend to be normalized entities, while views are denormalized entities, where you pick many measures/dimensions from multiple cubes as needed, to describe a business entity. 
 
 
 
