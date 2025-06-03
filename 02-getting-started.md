@@ -51,7 +51,28 @@ cubes:
 
 Usually, cubes tend to be normalized entities, while views are denormalized entities, where you pick many measures/dimensions from multiple cubes as needed, to describe a business entity. 
 
+Views are usually loaded in the "views" folder, and have a _view postfix. For example, "model/views/orders_view.yml":
+```yml
+views:
+  - name: orders_view
+    
+    cubes: # include from other cubes
+      - join_path: orders
+        includes:
+          - status
+          - created_at
+          - count
+          - completed_count
+          - completed_percentage
 
+      - join_path: orders.users
+        prefix: true
+        includes:
+          - city
+          - age
+          - state
+
+```
 
 
 
