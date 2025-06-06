@@ -8,6 +8,7 @@ Example "model/cubes/orders.yml" file:
 cubes:
   - name: orders
     sql_tables: ecom.orders
+    public: false
 
     joins:
       - name: users
@@ -74,8 +75,9 @@ views:
 
 ```
 
+"Semantic Layer Sync" programmatically connects to a BI tool to Cube, and creates/updates BI-specific entities that correspond to entities (cubes/views/measures/dimensions) within the data model in Cube. It is configured using the `semanticLayerSync` option in the "cube.js" config file. After running the sync, you should see the orders_view dataset that was created in BI. Alternatively, you can connect to Cube from BI tool, and create all the mappings manually. 
 
-
+Recommend: Making cubes private, and only exposing views. 
 
 
 
