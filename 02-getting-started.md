@@ -79,27 +79,6 @@ views:
 
 Recommend: Making cubes private, and only exposing views. 
 
+To test REST API from terminal, you can use `curl`. 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Cube uses the JSON Web Token (JWT) standard by default, to authenticate requests. 
