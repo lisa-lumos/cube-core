@@ -51,9 +51,16 @@ When using Docker, mount the config file and the data model folder to "/cube/con
 Cube can be run in an insecure dev mode, by setting CUBEJS_DEV_MODE = true. 
 
 ## Pre-Aggregation support
+By default, AWS Redshift uses batching to build pre-aggs. 
 
+Require the Redshift user to have ownership of a schema. By default, the schema name is `prod_pre_aggregations`. It can be set using the `pre_aggregations_schema` configuration option. 
 
-
+For improved pre-agg performance with large datasets, enable export bucket functionality, with these env vars:
+- CUBEJS_DB_EXPORT_BUCKET_type=s3
+- CUBEJS_DB_EXPORT_BUCKET=..
+- CUBEJS_DB_EXPORT_BUCKET_AWS_KEY=...
+- CUBEJS_DB_EXPORT_BUCKET_AWS_SECRET=...
+- CUBEJS_DB_EXPORT_BUCKET_AWS_REGION=...
 
 
 
