@@ -62,10 +62,44 @@ For improved pre-agg performance with large datasets, enable export bucket funct
 - CUBEJS_DB_EXPORT_BUCKET_AWS_SECRET=...
 - CUBEJS_DB_EXPORT_BUCKET_AWS_REGION=...
 
+## Viz tools - Tableau
+Not recommended: using Tableau extracts when connecting to Cube. Use pre-aggs instead. 
 
+## Concurrency
+Query queue:
+- dedupes queries, insulate upstream data sources from query spikes
+- allows to run queries against data sources concurrently, for performance. 
 
+For Amazon Redshift, default concurrency is 5. For Snowflake, it is 8. 
 
+## Multitenancy
+For cases where 
+- you need to serve different datasets for different users/tenants that are not related to each other. 
+- or, users need to access the same data, but from different databases. 
 
+`securityContext` can include all the necessary data to identify a user/org/app, etc. 
+
+When you want to define row-level security within the same db for different users, use `queryRewrite`. e.g.:
+```js
+module.exports = {
+  queryRewrite: (query, { securityContext }) => {
+    if (securityContext.categoryId) {
+      query.filters.push({
+        member: "products.category_id",
+        operator: "equals",
+        values: [securityContext.categoryId]
+      })
+    }
+    return query
+  }
+}
+```
+for cube:
+```yml
+cubes:
+  - name: products
+    sql_table: products
+```
 
 
 
