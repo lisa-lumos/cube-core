@@ -89,7 +89,37 @@ cubes:
         type: string
 ```
 
+Dimensions can be organized into hierarchies. Common Cube dimension types: time/string/number/boolean. 
+```yml
+cubes:
+  - name: orders
+    # ...
+ 
+    dimensions:
+      - name: created_at
+        sql: created_at
+        type: time
+        # You can use this time dimension with all default granularities:
+        # year, quarter, month, week, day, hour, minute, second
+ 
+      - name: completed_at
+        sql: completed_at
+        type: time
+        # You can use this time dimension with all default granularities
+        # and an additional custom granularity defined below
+        granularities:
+          - name: fiscal_year_starting_on_february_01
+            interval: 1 year
+            offset: 1 month
+```
 
+Time dimensions are essential to have performance boosts, such as partitioned pre-aggs and incremental refreshes. 
+
+Measures. Measure types in cube: avg/boolean/count/count_distinct/count_distinct_approx/max/min/number/string/sum/time. 
+
+Additivity determines whether measure values can be further aggregated. 
+
+Measures that do not ref other measures are leaf measures. Whether a query contains only additive leaf measures affect pre-agg matching. 
 
 ## Syntax
 ## Dynamic data models
