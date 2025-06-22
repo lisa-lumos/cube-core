@@ -121,6 +121,31 @@ Additivity determines whether measure values can be further aggregated.
 
 Measures that do not ref other measures are leaf measures. Whether a query contains only additive leaf measures affect pre-agg matching. 
 
+Joins. In Cube, all joins are left joins. 
+```yml
+cubes:
+  - name: orders
+    # ...
+ 
+    joins:
+      - name: line_items
+        sql: "{CUBE}.id = {line_items.order_id}"
+        relationship: many_to_one
+```
+
+Segments. Named filters that live inside the data model. 
+```yml
+cubes:
+  - name: orders
+    # ...
+ 
+    segments:
+      - name: only_completed
+        sql: "{CUBE}.status = 'completed'"
+```
+
+
+
 ## Syntax
 ## Dynamic data models
 ## refs
