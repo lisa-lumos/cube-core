@@ -144,7 +144,21 @@ cubes:
         sql: "{CUBE}.status = 'completed'"
 ```
 
-
+Pre-aggregations. Accelerate frequently used queries, and keep the cache up-to-date. 
+```yml
+cubes:
+  - name: orders
+    # ...
+ 
+    pre_aggregations:
+      - name: main
+        measures:
+          - count
+        dimensions:
+          - status
+        time_dimension: created_at
+        granularity: day
+```
 
 ## Syntax
 ## Dynamic data models
