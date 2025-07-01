@@ -160,6 +160,74 @@ cubes:
         granularity: day
 ```
 
+Proxy dimensions: calculated dims from existing dims. 
+```yml
+cubes:
+  - name: users
+    sql_table: users
+ 
+    dimensions:
+      - name: initials
+        sql: "SUBSTR(first_name, 1, 1)"
+        type: string
+ 
+      - name: last_name
+        sql: "UPPER(last_name)"
+        type: string
+ 
+      - name: full_name
+        sql: "{initials} || '. ' || {last_name}" # calculated dim
+        type: string
+```
+
+```yml
+cubes:
+  - name: orders
+    sql: >
+      SELECT 1 AS id, 1 AS user_id UNION ALL
+      SELECT 2 AS id, 1 AS user_id UNION ALL
+      SELECT 3 AS id, 2 AS user_id
+ 
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+ 
+      - name: user_name
+        sql: "{users.name}" # using dim from a diff cube
+        type: string
+ 
+    measures:
+      - name: count
+        type: count
+ 
+    joins:
+      - name: users
+        sql: "{users}.id = {orders}.user_id"
+        relationship: one_to_many
+ 
+  - name: users
+    sql: >
+      SELECT 1 AS id, 'Alice' AS name UNION ALL
+      SELECT 2 AS id, 'Bob'   AS name
+ 
+    dimensions:
+      - name: name
+        sql: name
+        type: string
+```
+
+Time dimension granularity. 
+
+
+
+
+
+
+
+
+
 ## Syntax
 ## Dynamic data models
 ## refs
