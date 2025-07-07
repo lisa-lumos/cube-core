@@ -246,9 +246,57 @@ cubes:
         type: time
 ```
 
+Subquery dimensions. If you have 2 cubes joined, you can use a subquery dimension to bring a measure from 2nd cube to 1st cube, as a dimension. 
+```yml
+cubes:
+  - name: orders
+    sql: >
+      SELECT 1 AS id, 1 AS user_id UNION ALL
+      SELECT 2 AS id, 1 AS user_id UNION ALL
+      SELECT 3 AS id, 2 AS user_id
+ 
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+ 
+    measures:
+      - name: count
+        type: count
+ 
+    joins:
+      - name: users
+        sql: "{users}.id = {orders}.user_id"
+        relationship: one_to_many
+ 
+  - name: users
+    sql: >
+      SELECT 1 AS id, 'Alice' AS name UNION ALL
+      SELECT 2 AS id, 'Bob'   AS name
+ 
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+ 
+      - name: name
+        sql: name
+        type: string
+ 
+      - name: order_count # subquery dimension
+        sql: "{orders.count}"
+        type: number
+        sub_query: true # note this
+ 
+    measures:
+      - name: avg_order_count
+        sql: "{order_count}"
+        type: avg
+```
 
-
-
+Multi-stage calculations. 
 
 
 
