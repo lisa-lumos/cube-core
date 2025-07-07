@@ -219,7 +219,32 @@ cubes:
 ```
 
 Time dimension granularity. 
-
+```yml
+cubes:
+  - name: users
+    sql: >
+      SELECT '2025-01-01T00:00:00Z' AS created_at UNION ALL
+      SELECT '2025-02-01T00:00:00Z' AS created_at UNION ALL
+      SELECT '2025-03-01T00:00:00Z' AS created_at
+ 
+    dimensions:
+      - name: created_at
+        sql: created_at
+        type: time
+ 
+        granularities: # prepare a granularity
+          - name: sunday_week
+            interval: 1 week
+            offset: -1 day
+ 
+      - name: created_at__year
+        sql: "{created_at.year}" # an cube existing granularity
+        type: time
+ 
+      - name: created_at__sunday_week
+        sql: "{created_at.sunday_week}" # assign it to a dim
+        type: time
+```
 
 
 
