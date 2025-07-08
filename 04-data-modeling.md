@@ -296,9 +296,34 @@ cubes:
         type: avg
 ```
 
-Multi-stage calculations. 
+Multi-stage calculations. Calculated in 2 or more stages, and often involve manipulations, or already aggregated data. Each stage results in one/more CTEs in the generated SQL query. They are currently not accelerated by pre-aggs. 
 
+rolling window, period-to-date, prior date, fixed dimension, ranking, etc. 
 
+Extension. Can create a child cube/view that reuses all declared members of a parent cube/view. Reusable. The usual pattern is to extract commom measures/dims/joins from the parent, and extend from it. 
+
+Polymorphic cubes. 
+
+Data blending. Literally a union. 
+
+Joins. Only need to be defined from one direction. 3 types of joins:
+- one_to_one
+- one_to_many
+- many_to_one
+
+"customers.yml":
+```yml
+cubes:
+  - name: customers
+    # ...
+ 
+    joins:
+      - name: orders
+        relationship: one_to_many
+        sql: "{CUBE}.id = {orders.customer_id}"
+```
+
+You can swap join tables as needed. 
 
 
 ## Syntax
