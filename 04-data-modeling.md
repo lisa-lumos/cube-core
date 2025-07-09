@@ -311,7 +311,7 @@ Joins. Only need to be defined from one direction. 3 types of joins:
 - one_to_many
 - many_to_one
 
-"customers.yml":
+"model/cubes/customers.yml":
 ```yml
 cubes:
   - name: customers
@@ -325,10 +325,32 @@ cubes:
 
 You can swap join tables as needed. 
 
+When generating SQL queries, Cube uses PKs (defined as a dimension in the cube) to avoid fanouts. 
 
 ## Syntax
+Recommend: cubes live in the "models/cubes" folder, and views live in the "models/views" folder. 
+
+You can use yml/js to define models, or mixed. yml and snake case is recommended. 
+
+dimensions/measures can use sql expressions, such as `sql: "upper(status)"`. 
+
+Use `{col_name}` to refer to dimensions/measures defined in the cube itself. 
+
+Use `{time_dimension_name.granularity}` to change granularity. I think can use sql too. 
+
+Use `{cube_name.col_name}` to avoid ambiguity when joining. 
+
+Use `{CUBE}.col_name` to refer to itself. 
+
+Referencing another cube in the dim definition instructs Cube to make an implicit join to that cube. 
+
+Curly braces are optional outside of sql/sql_table keys. 
+
 ## Dynamic data models
-## refs
+Cube data models support jinja macros. 
+
+Dependencies can be listed in "requirements.txt" file. 
+
 ## Recipes
 ## dbt
 
