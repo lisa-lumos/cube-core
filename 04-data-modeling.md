@@ -352,6 +352,12 @@ Cube data models support jinja macros.
 Dependencies can be listed in "requirements.txt" file. 
 
 ## Recipes
+Best practices:
+- A cube's name should represent a business entity, and be plural. 
+- Applicable cube parameters should be ordered as: name -> sql_alias -> extends -> data_source -> sql -> sql_table -> title -> description -> public ->refresh_key -> meta -> pre_aggregations -> joins -> dimensions -> hierarchies -> segments -> measures -> access_policy
+- Views should be designed for data consumers, and optimized for consumption in visualization tools. 
+- Use `.yml` extension, instead of .yaml. 
+
 ## dbt
 
 
