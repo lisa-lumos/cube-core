@@ -359,17 +359,12 @@ Best practices:
 - Use `.yml` extension, instead of .yaml. 
 
 ## dbt
+Cube projects usually define cubes on top of dbt models. 
 
+By default, cube_dbt will load all dbt models. You can also pick the models to load, individually/by-tag/names.
 
+You can use the dbt_models function to iterate over all models, and output them as YAML. 
 
-
-
-
-
-
-
-
-
-
-
-
+dbt best practices:
+- convert all temporal cols in dbt into the TIMESTAMP format. 
+- have an updated_at col in every dbt model, so refresh keys of cubes can be easily defined. 
