@@ -12,6 +12,12 @@ Cube defines a refresh_key for each cube, to assess if the data needs to be refr
 
 If background refresh is disabled, Cube will refresh the cache during query execution, which may lead to delays. So recommend to always enable background refresh. 
 
+Cache types:
+1. Pre-agg in Cube Store. Did not reach database.
+2. Pre-agg in Cube Store with a suboptimal query plan. Did not reach database, might use index to enhance perf.
+3. Pre-agg in the data source. Consider use Cube Store as pre-agg storage. 
+4. Im-memory cache. The fastest query retrieval method, require the exact same query ran very recently. 
+5. No cache. 
 
 ## Using pre-aggs
 
