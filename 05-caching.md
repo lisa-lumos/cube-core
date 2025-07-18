@@ -5,7 +5,6 @@ Cube provides 2-level caching:
 
 For in-mem cache, the cache key is a generated SQL statement, with any existing query-dependent pre-aggs. Upon receiving an in-coming request, Cube first checks the cache using this key, if an existing value is present in the cache, and the refresh_key val for the query hasn't changed, the cached value will be returned. 
 
-## Getting started with Pre-aggregations
 Depends on the datasource, Cube might first builds pre-aggs as tables in the source db, then exports this data into the pre-agg storage, so Cube may require write access to the pre-agg schema in the database. 
 
 Cube defines a refresh_key for each cube, to assess if the data needs to be refreshed. By default, Cube checks this refresh key every 10 secs. 
@@ -18,6 +17,12 @@ Cache types:
 3. Pre-agg in the data source. Consider use Cube Store as pre-agg storage. 
 4. Im-memory cache. The fastest query retrieval method, require the exact same query ran very recently. 
 5. No cache. 
+
+## Getting started with Pre-aggregations
+A pre-agg is a condensed version of the source data. It can reduce the size of the dataset significantly, and can be used by qualified subsequent queries. A cube can have many pre-aggs. 
+
+Pre-aggs are stored in Cube Store, which is a dedicated pre-agg storage layer. 
+
 
 ## Using pre-aggs
 
