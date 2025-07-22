@@ -23,6 +23,41 @@ A pre-agg is a condensed version of the source data. It can reduce the size of t
 
 Pre-aggs are stored in Cube Store, which is a dedicated pre-agg storage layer. 
 
+Example:
+```yml
+cubes:
+  - name: orders
+    sql_table: orders
+ 
+    measures:
+      - name: count
+        type: count
+ 
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+ 
+      - name: status
+        sql: status
+        type: string
+ 
+      - name: completed_at
+        sql: completed_at
+        type: time
+ 
+    pre_aggregations:
+      - name: order_statuses # used to populate a drop-down, showing all status choices: 
+        dimensions:
+          - status
+      - name: orders_by_completed_at # 1 row for each mo
+        measures:
+          - count
+        time_dimension: completed_at
+        granularity: month
+
+```
 
 ## Using pre-aggs
 
