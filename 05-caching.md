@@ -67,6 +67,33 @@ When executing a query, Cube will try to match and fulfill it with a pre-agg fir
 
 `refresh_key`: default value is 1hr. When `every` and `sql` are used together, Cube will run the sql based on the interval, if the query returns new results, the pre-agg will be refreshed. 
 
+Partitioning. Can config `update_window` to incrementally refresh only the last set of partitions. Any rollup pre-agg can be partitioned by time using `partition_granularity`. e.g.:
+```yml
+cubes:
+  - name: orders
+    # ...
+ 
+    pre_aggregations:
+      - name: category_and_date
+        measures:
+          - count
+          - revenue
+        dimensions:
+          - category
+        time_dimension: created_at
+        granularity: day
+        partition_granularity: month
+        refresh_key:
+          every: 1 day
+          incremental: true
+          update_window: 3 months
+```
+
+Every physical partition is stored as a parquet file. The partition key is same as index sorting key. So when time dimension partitioning is used together with an index, the data will first be partitioned by time, then sorted by index. 
+
+In general, use less partitions, as long as you are happy with the query speed. 
+
+
 
 ## Matching pre-aggs
 
