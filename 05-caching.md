@@ -56,11 +56,16 @@ cubes:
           - count
         time_dimension: completed_at
         granularity: month
+        refresh_key:
+          every: 12 hour
+          sql: select max(created_at) from orders
 
 ```
 
 ## Using pre-aggs
+When executing a query, Cube will try to match and fulfill it with a pre-agg first, if no match found, it will then query the upstream database. 
 
+`refresh_key`: default value is 1hr. When `every` and `sql` are used together, Cube will run the sql based on the interval, if the query returns new results, the pre-agg will be refreshed. 
 
 
 ## Matching pre-aggs
